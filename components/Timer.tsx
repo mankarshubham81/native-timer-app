@@ -5,10 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 
 interface TimerProps {
   id: number;
+  onDelete: () => void;
 }
 
-const Timer: React.FC<TimerProps> = ({ id }) => {
-  const [time, setTime] = useState<number>(60);
+const Timer: React.FC<TimerProps> = ({ id, onDelete }) => {
+  const [time, setTime] = useState<number>(60); // Initial countdown time in seconds
   const [customTime, setCustomTime] = useState<string>('60');
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -52,6 +53,9 @@ const Timer: React.FC<TimerProps> = ({ id }) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={resetTimer} style={styles.iconButton}>
           <Ionicons name="refresh" size={20} color="#FF5722" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onDelete} style={styles.iconButton}>
+          <Ionicons name="trash" size={20} color="#FF0000" />
         </TouchableOpacity>
       </View>
       <TextInput
