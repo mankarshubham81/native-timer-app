@@ -1,6 +1,5 @@
-// App.tsx
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, FlatList } from 'react-native';
 import Timer from './Timer';
 
 const App: React.FC = () => {
@@ -12,8 +11,7 @@ const App: React.FC = () => {
       Alert.alert('Limit Reached', 'You can only add up to 5 timers.');
       return;
     }
-    const initialTime = 60; // default 1 minute, could be user input
-    setTimers([...timers, { id: nextId, initialTime }]);
+    setTimers([...timers, { id: nextId, initialTime: 60 }]);
     setNextId(nextId + 1);
   };
 
@@ -27,27 +25,43 @@ const App: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>React Native Timer App</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Multi-Timer App</Text>
       <Button title="Add Timer" onPress={addTimer} />
-      {timers.map((timer) => (
-        <Timer key={timer.id} id={timer.id} initialTime={timer.initialTime} onTimerEnd={handleTimerEnd} />
-      ))}
-    </ScrollView>
+      <FlatList
+        data={timers}
+        renderItem={({ item }) => (
+          <Timer key={item.id} id={item.id} initialTime={item.initialTime} onTimerEnd={handleTimerEnd} />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.timerGrid}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
     padding: 20,
+    backgroundColor: '#EDEDED',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 20,
+    color: '#4B4B4B',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  timerGrid: {
+    paddingBottom: 20,
+  },
+  row: {
+    justifyContent: 'space-between',
+    marginVertical: 5,
   },
 });
 
