@@ -4,16 +4,22 @@ import { View, Button, StyleSheet, Text, ScrollView } from 'react-native';
 import Timer from './Timer';
 
 const TimerApp: React.FC = () => {
-  const [timers, setTimers] = useState<number[]>([]);
+  const [timers, setTimers] = useState<{ id: number }[]>([]);
+  const [nextId, setNextId] = useState(0); // Initialize unique ID counter
   const [showLimitMessage, setShowLimitMessage] = useState(false);
 
   const addTimer = () => {
     if (timers.length < 5) {
-      setTimers([timers.length, ...timers]);
+      setTimers([...timers, { id: nextId }]); // Assign unique ID to each timer
+      setNextId(nextId + 1); // Increment the counter for the next timer
     } else {
       setShowLimitMessage(true);
       setTimeout(() => setShowLimitMessage(false), 2000);
     }
+  };
+
+  const deleteTimer = (id: number) => {
+    setTimers(timers.filter(timer => timer.id !== id));
   };
 
   return (
@@ -23,8 +29,8 @@ const TimerApp: React.FC = () => {
       {showLimitMessage && <Text style={styles.limitText}>Maximum of 5 timers reached</Text>}
       <ScrollView contentContainerStyle={styles.timersContainer}>
         <View style={styles.gridContainer}>
-          {timers.map((timerId) => (
-            <Timer key={timerId} id={timerId} />
+          {timers.map(({ id }) => (
+            <Timer key={id} id={id} onDelete={() => deleteTimer(id)} />
           ))}
         </View>
       </ScrollView>
