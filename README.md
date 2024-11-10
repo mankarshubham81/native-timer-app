@@ -3,6 +3,8 @@
 ## Overview
 The Multi-Timer App is a React Native application that allows users to set and manage up to five timers simultaneously. Each timer functions independently, providing options to start, pause, reset, and set custom countdowns for each one. The app is user-friendly with clear notifications when a timer reaches zero and a visually optimized layout.
 
+documentation link : https://charmed-border-26a.notion.site/Multi-timer-app-13a0c8ffdbdf80f98f65ee8dc73f4f92?pvs=73
+
 ## Features
 1. **Multiple Timers**:
    - Users can add up to five timers at the same time, each operating independently.
