@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: "TimerApp",
-    slug: "TimerApp",
+    name: "MultiTimer",
+    slug: "multi-timer", // Updated to match Expo Dashboard slug
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -28,8 +28,11 @@ export default {
     },
     extra: {
       eas: {
-        projectId: process.env.EAS_PROJECT_ID,
+        projectId: process.env.EAS_PROJECT_ID, // Make sure this matches the Expo Dashboard
       },
+    },
+    cli: {
+      appVersionSource: "remote", // Added to address the version source warning
     },
   },
 };
